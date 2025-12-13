@@ -16,3 +16,7 @@
 .DS_Store
 Thumbs.db
 
+/TRABAJO_VHDL.sim
+/TRABAJO_VHDL.hw
+/TRABAJO_VHDL.cache
+/TRABAJO_VHDL.ip_user_files
