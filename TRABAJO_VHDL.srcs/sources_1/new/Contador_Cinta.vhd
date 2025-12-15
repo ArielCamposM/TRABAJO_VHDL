@@ -8,7 +8,8 @@ entity Contador_Cinta is
         reset   : in std_logic;
         inc     : in std_logic; -- pieza_ready_in
         dec     : in std_logic; -- pieza_expulsada
-        code    : out std_logic_vector(3 downto 0)
+        code    : out std_logic_vector(3 downto 0);
+        cinta_ocupada:out std_logic
      );
 end entity;
 
@@ -23,12 +24,12 @@ begin
 
     elsif rising_edge(clk) then
 
-        if inc = '1' then
+        if inc = '1' and dec ='0' then  --si aumenta el numero y no disminuye
             if count < 9 then
                 count <= count + 1;
             end if;
 
-        elsif dec = '1' then
+        elsif dec = '1' and inc='0' then
             if count > 0 then
                 count <= count - 1;
             end if;
@@ -38,5 +39,6 @@ begin
 end process;
 
 code <= std_logic_vector(count);
+cinta_ocupada <= '1' when count>0 else '0'; --flag de estado de la cinta. Para nuevo control de cinta
 
 end Behavioral;
