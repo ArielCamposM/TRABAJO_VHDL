@@ -8,13 +8,13 @@ entity Gestor_Sensores is
         reset         : in  std_logic;
 
         sensor_in     : in  std_logic;         -- sensor de entrada físico
-        sensor_out    : in  std_logic;         -- sensor de salida físico
+        sensor_exit    : in  std_logic;         
 
         pieza_ready_in  : out std_logic;       -- pulso en flanco subida entrada
-        pieza_ready_out : out std_logic;       -- pulso en flanco subida salida
+        pieza_ready_exit : out std_logic;       
 
-        estado_in     : out std_logic;         -- nivel estable
-        estado_out    : out std_logic          -- nivel estable
+        estado_in     : out std_logic;         -- nivel estable de sensores
+        estado_exit    : out std_logic          
     );
 end entity;
 
@@ -30,9 +30,7 @@ architecture Behavioral of Gestor_Sensores is
 
 begin
 
-    --------------------------------------------------------------------
     -- SINCRONIZADORES
-    --------------------------------------------------------------------
     U_SYNC_IN : entity work.SYNCHRNZR
         port map(
             clk   => clk,
@@ -45,13 +43,11 @@ begin
         port map(
             clk   => clk,
             RESET  => reset,
-            ASYNC_IN     => sensor_out,
+            ASYNC_IN     => sensor_exit,
             SYNC_OUT     => out_sync
         );
 
-    --------------------------------------------------------------------
-    -- DETECCIÓN DE FLANCOS
-    --------------------------------------------------------------------
+    -- Detecta flancos
     process(clk, reset)
     begin
         if reset = '1' then
@@ -59,13 +55,11 @@ begin
             out_prev <= '0';
 
             pieza_ready_in  <= '0';
-            pieza_ready_out <= '0';
+            pieza_ready_exit <= '0';
 
-        elsif rising_edge(clk) then
-
-            -- por defecto los pulsos están a 0
+        elsif rising_edge(clk) then  
             pieza_ready_in  <= '0';
-            pieza_ready_out <= '0';
+            pieza_ready_exit <= '0';
 
             -- flanco subida sensor entrada
             if in_sync = '1' and in_prev = '0' then
@@ -74,20 +68,18 @@ begin
 
             -- flanco subida sensor salida
             if out_sync = '1' and out_prev = '0' then
-                pieza_ready_out <= '1';
+                pieza_ready_exit <= '1';
             end if;
 
-            -- actualizar memorias
+            -- actualizamos memorias
             in_prev  <= in_sync;
             out_prev <= out_sync;
 
         end if;
     end process;
 
-    --------------------------------------------------------------------
-    -- niveles estables
-    --------------------------------------------------------------------
+    -- el estado será la salida del sincronizador (para entrada y para salida)
     estado_in  <= in_sync;
-    estado_out <= out_sync;
+    estado_exit <= out_sync;
 
 end Behavioral;
