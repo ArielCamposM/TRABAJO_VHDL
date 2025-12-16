@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="67" Path="C:/Users/ariel/Documents/IngElectronica4/SED/Trabajos/TRABAJO_VHDL/TRABAJO_VHDL.xpr">
+<Project Product="Vivado" Version="7" Minor="67" Path="C:/Trabajo SED VHDL/TRABAJO_VHDL/TRABAJO_VHDL.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="bcc365e995044d7ab30e34e2c869f50a"/>
@@ -91,7 +91,6 @@
   <FileSets Version="1" Minor="32">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
-<<<<<<< Updated upstream
       <File Path="$PSRCDIR/sources_1/new/Contador_Cinta.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -99,16 +98,13 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/Contador_Pieza.vhd">
-=======
-      <File Path="$PSRCDIR/sources_1/new/CNTRL_Cinta.vhd">
->>>>>>> Stashed changes
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/Contador_Pieza.vhd">
+      <File Path="$PSRCDIR/sources_1/new/CNTRL_Cinta.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -163,11 +159,7 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-<<<<<<< Updated upstream
         <Option Name="TopModule" Val="Contador_Cinta"/>
-=======
-        <Option Name="TopModule" Val="CNTRL_Cinta"/>
->>>>>>> Stashed changes
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
@@ -215,13 +207,8 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-<<<<<<< Updated upstream
         <Option Name="TopModule" Val="tb_Contador_Cinta"/>
-=======
-        <Option Name="TopModule" Val="TB_CNTRL_Cinta"/>
->>>>>>> Stashed changes
         <Option Name="TopLib" Val="xil_defaultlib"/>
-        <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
         <Option Name="SelectedSimModel" Val="rtl"/>
