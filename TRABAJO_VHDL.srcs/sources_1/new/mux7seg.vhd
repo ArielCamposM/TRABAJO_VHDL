@@ -15,7 +15,7 @@ end entity;
 
 architecture Behavioral of Mux7Seg_Piezas is
 
-    signal refresh_cnt : unsigned(15 downto 0) := (others => '0');
+    signal refresh_count : unsigned(15 downto 0) := (others => '0');
     signal sel_digit   : std_logic := '0';
     signal digit       : std_logic_vector(3 downto 0);
 
@@ -25,13 +25,13 @@ begin
 process(clk, reset)
 begin
     if reset='1' then
-        refresh_cnt <= (others=>'0');
+        refresh_count <= (others=>'0');
     elsif rising_edge(clk) then
-        refresh_cnt <= refresh_cnt + 1;
+        refresh_count <= refresh_count + 1;
     end if;
 end process;
 
-sel_digit <= refresh_cnt(15); -- alterna anodos entre uds y dec
+sel_digit <= refresh_count(15); -- alterna anodos entre uds y dec
 
 -- Selección del dígito activo
 digit <= unidades when sel_digit='0' else decenas;

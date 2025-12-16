@@ -12,9 +12,9 @@ entity Interfaz_Usuario is
         sw_sensor_out : in std_logic;
 
         -- Señales internas 
-        cmd_push   : in std_logic;
-        cmd_move   : in std_logic;
-        cmd_eject  : in std_logic;
+        act1_push   : in std_logic;
+        act2_move   : in std_logic;
+        act3_eject  : in std_logic;
 
         count_cinta  : in std_logic_vector(3 downto 0);
         count_piezas : in std_logic_vector(7 downto 0); 
@@ -26,7 +26,7 @@ entity Interfaz_Usuario is
 
         -- Salidas hacia el sistema
         sensor_in  : out std_logic;
-        sensor_out : out std_logic
+        sensor_exit : out std_logic
     );
 end entity;
 
@@ -46,12 +46,12 @@ architecture Behavioral of Interfaz_Usuario is
 begin
     -- Entradas físicas → sistema
     sensor_in  <= sw_sensor_in;
-    sensor_out <= sw_sensor_out;
+    sensor_exit <= sw_sensor_out;
 
     -- LEDs de actuadores
-    led(0) <= cmd_push;   -- motor entrada
-    led(1) <= cmd_move;   -- motor cinta
-    led(2) <= cmd_eject;  -- motor salida
+    led(0) <= act1_push;   -- motor entrada
+    led(1) <= act2_move;   -- motor cinta
+    led(2) <= act3_eject;  -- motor salida
 
     -- Selección de dígitos
     --an(0): piezas expulsadas unidades
