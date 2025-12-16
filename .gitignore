@@ -4,6 +4,7 @@
 *.pb
 *.str
 *.xpr.bak
+*.xpr
 
 .cache/
 .sim/
