@@ -7,7 +7,7 @@ entity Interfaz_Usuario is
         clk        : in  std_logic;
         reset      : in  std_logic;
 
-        -- Entradas físicas
+        -- Entradas físicas post debouncer
         sw_sensor_in  : in std_logic;
         sw_sensor_out : in std_logic;
 
@@ -31,7 +31,7 @@ entity Interfaz_Usuario is
 end entity;
 
 
-architecture Behavioral of Interfaz_Usuario is
+    architecture Behavioral of Interfaz_Usuario is
 
     -- contador para multiplexado
     signal mux_count : unsigned(15 downto 0) := (others => '0');

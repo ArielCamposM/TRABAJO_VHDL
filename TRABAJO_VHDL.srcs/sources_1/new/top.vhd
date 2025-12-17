@@ -20,6 +20,9 @@ architecture Structural of top is
     -- Señales de sensores
     signal sensor_in  : std_logic;
     signal sensor_exit : std_logic;
+    -- Señales después de pasar por el antirrebotes
+    signal sw0_debounced : std_logic;
+    signal sw1_debounced : std_logic;
 
     -- Gestor de sensores
     signal pieza_ready_in : std_logic;
@@ -47,14 +50,29 @@ architecture Structural of top is
     signal tick_1ms : std_logic;
 
 begin
+    U_DEBOUNCER_0 : entity work.Debouncer
+     port map 
+     (
+        clk            => clk,
+        boton_entrada  => SW(0),
+        boton_salida   => sw0_debounced
+        );
+
+    U_DEBOUNCER_1 : entity work.Debouncer
+     port map 
+     (
+        clk            => clk,
+        boton_entrada  => SW(1),
+        boton_salida   => sw1_debounced
+      );
     U_UI : entity work.Interfaz_Usuario
         port map(
             clk           => clk,
             reset         => reset,
 
             -- switches físicos
-            sw_sensor_in  => SW(0),
-            sw_sensor_out => SW(1),
+            sw_sensor_in  => sw0_debounced,
+            sw_sensor_out => sw1_debounced,
 
             -- órdenes a actuadores
             act1_push      => act1_push,
@@ -74,7 +92,7 @@ begin
             sensor_in     => sensor_in,
             sensor_exit    => sensor_exit
         );
-        
+    
      U_SENS : entity work.Gestor_Sensores
         port map(
             clk            => clk,
