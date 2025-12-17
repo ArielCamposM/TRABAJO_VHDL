@@ -69,7 +69,7 @@ begin
  --FMS EJECT
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             eject_state      <= E_IDLE;
             eject_count        <= (others => '0');
             cmd_eject        <= '0';
