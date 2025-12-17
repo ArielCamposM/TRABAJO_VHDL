@@ -4,8 +4,8 @@ use ieee.numeric_std.all;
 
 entity Interfaz_Usuario is
     port(
-        clk        : in  std_logic;
-        reset      : in  std_logic;
+        clk         : in  std_logic;
+        reset       : in  std_logic;
 
         -- Entradas físicas post debouncer
         sw_sensor_in  : in std_logic;
@@ -20,22 +20,21 @@ entity Interfaz_Usuario is
         count_piezas : in std_logic_vector(7 downto 0); 
 
         -- Salidas físicas
-        led        : out std_logic_vector(2 downto 0);
-        seg        : out std_logic_vector(6 downto 0);
-        an         : out std_logic_vector(3 downto 0);
+        led         : out std_logic_vector(2 downto 0);
+        seg         : out std_logic_vector(6 downto 0);
+        an          : out std_logic_vector(7 downto 0);
 
         -- Salidas hacia el sistema
-        sensor_in  : out std_logic;
+        sensor_in   : out std_logic;
         sensor_exit : out std_logic
     );
 end entity;
 
+architecture Behavioral of Interfaz_Usuario is
 
-    architecture Behavioral of Interfaz_Usuario is
-
-    -- contador para multiplexado
+    --Contador para multiplexado
     signal mux_count : unsigned(15 downto 0) := (others => '0');
-    signal seleccion     : std_logic := '0';
+    signal seleccion : unsigned(2 downto 0) := (others => '0');
 
     -- dígitos a mostrar
     signal dig0, dig1 : std_logic_vector(3 downto 0);
@@ -44,8 +43,8 @@ end entity;
     signal bcd_sel : std_logic_vector(3 downto 0);
 
 begin
-    -- Entradas físicas → sistema
-    sensor_in  <= sw_sensor_in;
+    -- Entradas físicas -> sistema
+    sensor_in   <= sw_sensor_in;
     sensor_exit <= sw_sensor_out;
 
     -- LEDs de actuadores
@@ -53,42 +52,58 @@ begin
     led(1) <= act2_move;   -- motor cinta
     led(2) <= act3_eject;  -- motor salida
 
-    -- Selección de dígitos
-    --an(0): piezas expulsadas unidades
-    --an(1): piezas expulsadas decenas
-    --an(4): piezas en cinta
-
-    dig0 <= count_piezas(3 downto 0);
-    dig1 <= count_piezas(7 downto 4);
-
+   
+    dig0 <= count_piezas(3 downto 0); --Unidades
+    dig1 <= count_piezas(7 downto 4); --Decenas
+    
+ 
     process(clk, reset)
     begin
         if reset = '0' then
             mux_count <= (others => '0');
-            seleccion <= '0';
+            seleccion <= (others => '0');
 
         elsif rising_edge(clk) then
             mux_count <= mux_count + 1;
+   
             if mux_count = 0 then
-                seleccion <= not seleccion;
+                seleccion <= seleccion + 1;
             end if;
         end if;
     end process;
 
-    -- Multiplexado
-    process(seleccion, dig0, dig1, count_cinta)
+    
+
+  --Multiplexado
+    
+   process(seleccion, dig0, dig1, count_cinta)
     begin
+        
+        an <= "11111111"; 
+        bcd_sel <= "1111"; 
+
         case seleccion is
-            when '0' =>
-                an <= "1110";      -- display 0 activo
+            
+            when "000" => 
+                an <= "11111110"; -- Display 1 activo
                 bcd_sel <= dig0;
-            when others =>
-                an <= "1101";      -- display 1 activo
+                
+            when "001" => 
+                an <= "11111101"; --Display 2 activo
                 bcd_sel <= dig1;
+                
+           
+            when "100" =>
+                an <= "11101111"; --Display 5 activo
+                bcd_sel <= count_cinta;
+            
+            when others =>
+                an <= "11111111"; 
+                bcd_sel <= "1111";
         end case;
     end process;
 
-    -- Decodificador BCD → 7 segmentos
+    -- Decodificador BCD -> 7 segmentos 
     with bcd_sel select
         seg <= "0000001" when "0000", -- 0
                "1001111" when "0001", -- 1
@@ -100,6 +115,6 @@ begin
                "0001111" when "0111", -- 7
                "0000000" when "1000", -- 8
                "0000100" when "1001", -- 9
-               "1111111" when others;
+               "1111111" when others; 
 
 end Behavioral;

@@ -10,7 +10,7 @@ entity top is
         SW    : in  std_logic_vector(1 downto 0); -- switches placa
         LED   : out std_logic_vector(2 downto 0); -- leds placa
 
-        AN    : out std_logic_vector(3 downto 0);  -- anodos displays
+        AN    : out std_logic_vector(7 downto 0);  -- anodos displays
         SEG   : out std_logic_vector(6 downto 0)   -- segmentos displays
     );
 end entity top;
