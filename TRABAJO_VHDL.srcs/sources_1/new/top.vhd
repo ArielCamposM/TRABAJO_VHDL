@@ -140,7 +140,8 @@ begin
             reset    => reset,
             inc      => pieza_expulsada,
             unidades => count_piezas(3 downto 0),
-            decenas  => count_piezas(7 downto 4)
+            decenas  => count_piezas(7 downto 4),
+            cinta_activa => cinta_ocupada
         );
           
      U_ACT : entity work.Gestor_Actuadores

@@ -8,7 +8,9 @@ entity Contador_Pieza is
         reset   : in std_logic;
         inc     : in std_logic; -- pieza_expulsada (pulso)
         unidades    : out std_logic_vector(3 downto 0); -- BCD 0..9
-        decenas   : out std_logic_vector(3 downto 0) -- BCD 0..9
+        decenas   : out std_logic_vector(3 downto 0); -- BCD 0..9
+        
+        cinta_activa : in std_logic --la cinta continua activa 
      );
 end entity;
 
@@ -25,7 +27,7 @@ begin
         decenas_int <= (others=>'0');
         
     elsif rising_edge(clk) then
-        if inc = '1' then
+        if inc = '1' and cinta_activa='1' then
             if unidades_int = 9 then
                 unidades_int <= (others=>'0');
             if decenas_int = 9 then
