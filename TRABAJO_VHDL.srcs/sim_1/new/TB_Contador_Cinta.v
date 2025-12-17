@@ -56,9 +56,9 @@ begin
     stim_proc: process
     begin
         -- Reset inicial
-        reset_tb <= '1';
-        wait for 100 ns;
         reset_tb <= '0';
+        wait for 100 ns;
+        reset_tb <= '1';
         wait for CLK_PERIOD;
 
         --Vamos a 9

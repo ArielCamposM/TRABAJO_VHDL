@@ -54,11 +54,11 @@ begin
     stim_proc: process
     begin
         -- Estado inicial
-        reset_tb <= '1'; 
+        reset_tb <= '0'; 
         inc_tb   <= '0';
         wait for 100 ns;
         
-        reset_tb <= '0';
+        reset_tb <= '1';
         wait for CLK_PERIOD;
 
     --Primer tramo de cuenta hasta 25

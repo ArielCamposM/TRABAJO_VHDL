@@ -63,7 +63,7 @@ begin
 
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             mux_count <= (others => '0');
             seleccion <= '0';
 

@@ -21,7 +21,7 @@ begin
 
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             act1_push  <= '0';
             act2_move  <= '0';
             act3_eject <= '0';

@@ -38,7 +38,7 @@ begin
     --FSM PUSH
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             push_state <= P_IDLE;
             push_count   <= (others => '0');
             cmd_push   <= '0';

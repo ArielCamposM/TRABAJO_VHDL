@@ -41,9 +41,9 @@ begin
     stim_proc : process
     begin
         -- RESET
-        reset <= '1';
-        wait for 50 ns;
         reset <= '0';
+        wait for 50 ns;
+        reset <= '1';
 
         -- Sensor de entrada se activa
         wait for 40 ns;

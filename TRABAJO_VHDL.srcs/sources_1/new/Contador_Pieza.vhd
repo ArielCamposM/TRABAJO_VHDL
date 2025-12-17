@@ -20,7 +20,7 @@ begin
 
 process(clk, reset)
 begin
-    if reset = '1' then
+    if reset = '0' then
         unidades_int <= (others=>'0');
         decenas_int <= (others=>'0');
         

@@ -10,7 +10,7 @@ architecture Behavioral of TB_CNTRL_Cinta is
     constant CLK_PERIOD : time := 10 ns; -- 100 MHz
 
     signal clk   : std_logic := '0';
-    signal reset : std_logic := '1';
+    signal reset : std_logic := '0';
 
     signal pieza_ready_in : std_logic := '0';
     signal estado_exit    : std_logic := '0';
@@ -54,7 +54,7 @@ begin
  --Modelado Cinta
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             piezas_tb <= 0;
             cinta_ocupada <= '0';
 

@@ -50,7 +50,7 @@ begin
     -- Detecta flancos
     process(clk, reset)
     begin
-        if reset = '1' then
+        if reset = '0' then
             in_prev  <= '0';
             out_prev <= '0';
 
