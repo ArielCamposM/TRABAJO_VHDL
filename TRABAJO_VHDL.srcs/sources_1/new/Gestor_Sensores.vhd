@@ -20,13 +20,8 @@ end entity;
 
 architecture Behavioral of Gestor_Sensores is
 
-    -- señales sincronizadas
-    signal in_sync   : std_logic := '0';
-    signal out_sync  : std_logic := '0';
-
-    -- memorias para flancos
-    signal in_prev   : std_logic := '0';
-    signal out_prev  : std_logic := '0';
+    signal in_sync  : std_logic := '0';
+    signal out_sync : std_logic := '0';
 
 begin
 
@@ -46,40 +41,24 @@ begin
             ASYNC_IN     => sensor_exit,
             SYNC_OUT     => out_sync
         );
+    
+    --Detectores de flanco
+    U_EDGE_IN : entity work.EDGEDTCTR
+        port map(
+            CLK     => clk,
+            SYNC_IN => in_sync,
+            EDGE    => pieza_ready_in
+        );
 
-    -- Detecta flancos
-    process(clk, reset)
-    begin
-        if reset = '0' then
-            in_prev  <= '0';
-            out_prev <= '0';
+   
+    U_EDGE_OUT : entity work.EDGEDTCTR
+        port map(
+            CLK     => clk,
+            SYNC_IN => out_sync,
+            EDGE    => pieza_ready_exit
+        );
 
-            pieza_ready_in  <= '0';
-            pieza_ready_exit <= '0';
-
-        elsif rising_edge(clk) then  
-            pieza_ready_in  <= '0';
-            pieza_ready_exit <= '0';
-
-            -- flanco subida sensor entrada
-            if in_sync = '1' and in_prev = '0' then
-                pieza_ready_in <= '1';
-            end if;
-
-            -- flanco subida sensor salida
-            if out_sync = '1' and out_prev = '0' then
-                pieza_ready_exit <= '1';
-            end if;
-
-            -- actualizamos memorias
-            in_prev  <= in_sync;
-            out_prev <= out_sync;
-
-        end if;
-    end process;
-
-    -- el estado será la salida del sincronizador (para entrada y para salida)
-    estado_in  <= in_sync;
+    estado_in   <= in_sync;
     estado_exit <= out_sync;
 
 end Behavioral;

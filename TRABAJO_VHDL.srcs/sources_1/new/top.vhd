@@ -100,7 +100,7 @@ begin
             sensor_in      => sensor_in,
             sensor_exit     => sensor_exit,
             pieza_ready_in => pieza_ready_in,
-            estado_exit     => estado_exit
+            pieza_ready_exit=> estado_exit
         );
         
      U_TIMER : entity work.Temporizador
