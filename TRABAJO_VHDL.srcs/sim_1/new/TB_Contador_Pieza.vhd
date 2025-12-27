@@ -13,7 +13,8 @@ architecture Behavioral of tb_Contador_Pieza is
             reset    : in std_logic;
             inc      : in std_logic;
             unidades : out std_logic_vector(3 downto 0);
-            decenas  : out std_logic_vector(3 downto 0)
+            decenas  : out std_logic_vector(3 downto 0);
+            cinta_activa : in std_logic
         );
     end component;
 
@@ -22,6 +23,7 @@ architecture Behavioral of tb_Contador_Pieza is
     signal inc_tb      : std_logic := '0';
     signal unidades_tb : std_logic_vector(3 downto 0);
     signal decenas_tb  : std_logic_vector(3 downto 0);
+    signal cinta_activa_tb : std_logic := '1';
     
     
     constant CLK_PERIOD : time := 10 ns;
@@ -36,7 +38,9 @@ begin
             reset    => reset_tb,
             inc      => inc_tb,
             unidades => unidades_tb,
-            decenas  => decenas_tb
+            decenas  => decenas_tb,
+            cinta_activa => cinta_activa_tb
+            
         );
 
  --Reloj

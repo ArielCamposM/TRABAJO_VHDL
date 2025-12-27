@@ -80,7 +80,7 @@ begin
     begin
     
         wait for 5 us;
-        reset <= '0';
+        reset <= '1';
 
   --Entrada pieza 1
         wait for 10 us;
